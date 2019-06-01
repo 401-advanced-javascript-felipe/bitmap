@@ -11,6 +11,13 @@ function Bitmap(filePath) {
   this.file = filePath;
 }
 
+
+/**
+ * Bitmap -- Offset values
+ */
+const PIXEL_OFFSET = 10;
+const COLOR_TABLE_OFFSET = 54;
+
 /**
  * Parser -- accepts a buffer and will parse through it, according to the specification, creating object properties for each segment of the file
  * @param buffer
@@ -18,6 +25,9 @@ function Bitmap(filePath) {
 Bitmap.prototype.parse = function(buffer) {
   this.buffer = buffer;
   this.type = buffer.toString('utf-8', 0, 2);
+  this.pixelOffset = buffer.readInt32LE(PIXEL_OFFSET);
+  this.colorArray = buffer.slice(COLOR_TABLE_OFFSET, Bitmap.pixelOffset);
+
   //... and so on
 };
 
@@ -27,6 +37,7 @@ Bitmap.prototype.parse = function(buffer) {
  */
 Bitmap.prototype.transform = function(operation) {
   // This is really assumptive and unsafe
+  console.log(typeof operation);
   transforms[operation](this);
   this.newFile = this.file.replace(/\.bmp/, `.${operation}.bmp`);
 };
@@ -41,15 +52,25 @@ const transformGreyscale = (bmp) => {
 
   console.log('Transforming bitmap into greyscale', bmp);
 
-  //TODO: Figure out a way to validate that the bmp instance is actually valid before trying to transform it
-
-  //TODO: alter bmp to make the image greyscale ...
+  for(let i = 0; i < bmp.colorArray.length; i += 4){
+    let gray = (bmp.colorArray[i] + bmp.colorArray[i+1] + bmp.colorArray[i+2]) / 3;
+    bmp.colorArray[i] = gray;
+    bmp.colorArray[i+1] = gray;
+    bmp.colorArray[i+2] = gray;
+  }
 
 };
 
 const doTheInversion = (bmp) => {
-  bmp = {};
-}
+
+  console.log('Transforming bitmap into invert', bmp);
+
+  for (var i = 0; i < bmp.colorArray.length; i+= 4) {
+    bmp.colorArray[i] = bmp.colorArray[i] ^ 255; // Invert Red
+    bmp.colorArray[i+1] = bmp.colorArray[i+1] ^ 255; // Invert Green
+    bmp.colorArray[i+2] = bmp.colorArray[i+2] ^ 255; // Invert Blue
+  }
+};
 
 /**
  * A dictionary of transformations
@@ -62,7 +83,7 @@ const transforms = {
 
 // ------------------ GET TO WORK ------------------- //
 
-function transformWithCallbacks() {
+function transformWithCallbacks(operation) {
 
   fs.readFile(file, (err, buffer) => {
 
@@ -71,7 +92,7 @@ function transformWithCallbacks() {
     }
 
     bitmap.parse(buffer);
-
+    console.log(bitmap);
     bitmap.transform(operation);
 
     // Note that this has to be nested!
@@ -91,5 +112,5 @@ const [file, operation] = process.argv.slice(2);
 
 let bitmap = new Bitmap(file);
 
-transformWithCallbacks();
+transformWithCallbacks(operation);
 
