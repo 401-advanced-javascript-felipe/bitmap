@@ -20,7 +20,9 @@
 
 #### Running the app
 * `npm start` Will transform baldy.bmp to grayscale. New file will be in the assets folder
-* `npm startInvert` Will transform baldy.bmp to inversion of colers. New file will be in the assets folder
-  
+* `npm run startInvert` Will transform baldy.bmp to inversion of colors. New file will be in the assets folder
+* `npm run startPixel` Will pixelate baldy.bmp. New file will be in the assets folder
+
+  startPixel
 #### Tests
 * `npm test` Will run test
