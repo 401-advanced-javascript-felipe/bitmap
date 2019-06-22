@@ -1,46 +1,26 @@
-# LAB - 
+# Lab 04 Buffer
 
-## Project Name
-
-### Author: Student/Group Name
+### Author: Felipe Delatorre
 
 ### Links and Resources
 * [submission PR](http://xyz.com)
 * [travis](http://xyz.com)
-* [back-end](http://xyz.com) (when applicable)
-* [front-end](http://xyz.com) (when applicable)
-
-#### Documentation
-* [api docs](http://xyz.com) (API servers)
-* [jsdoc](http://xyz.com) (Server assignments)
-* [styleguide](http://xyz.com) (React assignments)
 
 ### Modules
-#### `modulename.js`
-##### Exported Values and Methods
 
-###### `foo(thing) -> string`
-Usage Notes or examples
+###### bitmap.js
+* class `bitmap`. Holds bpm raw data as a buffer. Helps selecting transformation method
 
-###### `bar(array) -> array`
-Usage Notes or examples
+###### transformations.js
+*  `transformGreyscale(bitmap) ->` manipulate its buffer data
+*  `doInverse(bitmap) ->` manipulate its buffer data
 
-### Setup
-#### `.env` requirements
-* `PORT` - Port Number
-* `MONGODB_URI` - URL to the running mongo instance/db
+###### transWith.js
+* Runs the primary function of the app. Leaving index.js cleaner
 
 #### Running the app
-* `npm start`
-* Endpoint: `/foo/bar/`
-  * Returns a JSON object with abc in it.
-* Endpoint: `/bing/zing/`
-  * Returns a JSON object with xyz in it.
+* `npm start` Will transform baldy.bmp to grayscale. New file will be in the assets folder
+* `npm startInvert` Will transform baldy.bmp to inversion of colers. New file will be in the assets folder
   
 #### Tests
-* How do you run tests?
-* What assertions were made?
-* What assertions need to be / should be made?
-
-#### UML
-![](./assets/----.jpg)
+* `npm test` Will run test
