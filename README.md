@@ -3,8 +3,8 @@
 ### Author: Felipe Delatorre
 
 ### Links and Resources
-* [submission PR](http://xyz.com)
-* [travis](http://xyz.com)
+* [submission PR](https://github.com/401-advanced-javascript-felipe/bitmap/pull/2)
+* [travis](https://travis-ci.com/401-advanced-javascript-felipe/bitmap/builds/116528772)
 
 ### Modules
 
